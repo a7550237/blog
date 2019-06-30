@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 侧边导航栏 -->
+<div class="left-sidebar" th:fragment="siderbar">
+
+    <!-- 菜单 -->
+    <ul class="sidebar-nav">
+        <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
+        <li class="sidebar-nav-link">
+            <a href="/admin/index" class="active">
+                <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+            </a>
+        </li>
+
+
+        <li class="sidebar-nav-link">
+            <a href="javascript:;" class="sidebar-nav-sub-title">
+                <i class="am-icon-table sidebar-nav-link-logo"></i> 博客管理
+                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            </a>
+            <ul class="sidebar-nav sidebar-nav-sub">
+                <li class="sidebar-nav-link">
+                    <a th:href="@{/admin/write-blog}">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 发布博客
+                    </a>
+                </li>
+
+                <li class="sidebar-nav-link">
+                    <a href="javascript:void(0);" onclick="changeContent('/admin/blog-list')">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 批量管理
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

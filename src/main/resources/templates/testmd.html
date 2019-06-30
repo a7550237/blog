@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/md/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/md/css/editormd.min.css}"/>
+
+</head>
+<body>
+
+    <form>
+        <button>dd</button><input type="file" multiple="multiple" >
+
+    </form>
+
+    <div>
+        <header>
+            hello
+        </header>
+        <div id="hello">
+        <textarea style="display:none;">
+            #hehe
+        </textarea>
+
+        </div>
+
+    </div>
+
+
+</body>
+<script type="text/javascript" th:src="@{/admin/assets/js/jquery.min.js}"></script>
+<script th:src="@{/md/editormd.min.js}" type="text/javascript" ></script>
+<script type="text/javascript">
+    var text;
+    $(function () {
+        text = editormd("hello",{
+            width:"80%",
+            heigth:640,
+            syncScrolling:"single",
+            path : "/md/lib/",
+            imageUpload    : true,
+            imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "/admin/upload"
+        })
+    });
+</script>
+</html>

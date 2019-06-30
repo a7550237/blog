@@ -1,0 +1,297 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>blog</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+    <link rel="stylesheet" th:href="@{/static/blog/assets/css/amazeui.min.css}"
+          href="../../static/blog/assets/css/amazeui.min.css">
+    <link rel="stylesheet" th:href="@{/static/blog/assets/css/app.css}" href="../../static/blog/assets/css/app.css">
+</head>
+
+<body id="blog-article-sidebar">
+<!-- header start -->
+<header class="am-g am-g-fixed blog-fixed blog-text-center blog-header">
+    <div class="am-u-sm-8 am-u-sm-centered">
+        <img width="100"  th:src="@{/static/blog/assets/i/302_1584.jpg}" alt="Amaze UI Logo"/>
+        <h2 class="am-hide-sm-only am-monospace">Live and learn</h2>
+    </div>
+</header>
+<!-- header end -->
+<hr>
+
+<!-- nav start -->
+<nav class="am-g am-g-fixed blog-fixed blog-nav">
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only blog-button"
+            data-am-collapse="{target: '#blog-collapse'}"><span class="am-sr-only">导航切换</span> <span
+            class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="blog-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+            <li ><a href="/blog/index">首页</a></li>
+            <li ><a href="/blog/img">图片库</a></li>
+
+        </ul>
+        <form class="am-topbar-form am-topbar-right am-form-inline" role="search">
+            <div class="am-form-group">
+                <input type="text" class="am-form-field am-input-sm" placeholder="搜索">
+            </div>
+        </form>
+    </div>
+</nav>
+<!-- nav end -->
+<hr>
+<!-- content srart -->
+<div class="am-g am-g-fixed blog-fixed blog-content">
+    <div class="am-u-sm-12">
+        <article class="am-article blog-article-p">
+            <div class="am-article-hd">
+                <h1 class="am-article-title blog-text-center" th:text="${article.title}">我的文章哎</h1>
+                <p class="am-article-meta blog-text-center">
+                    <span><a href="javascript:void(0);">@Allen &nbsp;</a></span>-
+                    <span><a href="javascript:void(0);" th:text="${#dates.format(article.createTime,'yyyy/MM/dd')}">2015/10/9</a></span>
+                </p>
+            </div>
+            <div class="am-article-bd">
+                <img th:src="${article.coverPhotoPath}" src="../../static/blog/assets/i/f17.jpg" alt=""
+                     class="blog-entry-img blog-article-margin">
+                <p th:utext="${article.htmlBody}">
+                    <!--文章内容-->
+                </p>
+            </div>
+        </article>
+
+        <div class="am-g blog-article-widget blog-article-margin">
+            <div class="am-u-lg-4 am-u-md-5 am-u-sm-7 am-u-sm-centered blog-text-center">
+                <span class="am-icon-tags"> &nbsp;</span><a href="javascript:void(0);" th:text="${article.tag.tag}"></a>
+                <hr>
+                <a href=""><span class="am-icon-qq am-icon-fw am-primary blog-icon"></span></a>
+                <a href=""><span class="am-icon-wechat am-icon-fw blog-icon"></span></a>
+                <a href=""><span class="am-icon-weibo am-icon-fw blog-icon"></span></a>
+            </div>
+        </div>
+
+        <hr>
+        <h3 class="blog-comment">评论</h3>
+
+        <div id="comment" th:fragment="comment">
+            <input hidden="hidden" th:value="${success}" id="success">
+            <input hidden="hidden" th:value="${errorMsg}" id="errorMsg">
+            <div th:each="comment:${comments}">
+
+                <!--评论部分-->
+                <div class="am-g blog-author blog-article-margin">
+                    <div class="am-u-sm-3 am-u-md-3 am-u-lg-2">
+                        <img th:src="@{/static/blog/assets/i/f15.jpg}" src="../../static/blog/assets/i/f15.jpg" alt=""
+                             class="blog-author-img am-circle">
+
+                    </div>
+                    <div class="am-u-sm-9 am-u-md-9 am-u-lg-10">
+                        <h3><span th:text="${comment.name}+'      '">作者 &nbsp;: &nbsp;</span><span class="blog-color"
+                                                                                                   th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm:ss')}">amazeui</span>
+                        </h3>
+                        <p th:text="${comment.body}"></p>
+                        <a onclick="res(this)" th:data="${comment.commentId}" id="response"
+                           class="am-badge am-badge-secondary am-round"
+                           style="position: absolute;bottom: 20px;right: 10px" href="javascript:void(0);">回复</a>
+                        <hr>
+                    </div>
+
+                    <!--评论回复部分-->
+                    <div style="float: right;background: #fbfbfb;width: 95%;height: 80%"
+                         th:if="${comment.commentChildren!=null}">
+                        <div class="am-g blog-author blog-article-margin" th:each="child:${comment.commentChildren}">
+                            <div class="am-u-sm-3 am-u-md-3 am-u-lg-2">
+                                <img th:src="@{/static/blog/assets/i/f15.jpg}" src="../../static/blog/assets/i/f15.jpg"
+                                     alt="" class="blog-author-img am-circle">
+
+                            </div>
+                            <div class="am-u-sm-9 am-u-md-9 am-u-lg-10">
+                                <h3><span th:text="${child.name}+'回复@'+${comment.name}+':      '">&nbsp;</span><span
+                                        class="blog-color" th:text="${#dates.format(child.createTime,'yyyy-MM-dd')}">amazeui</span>
+                                </h3>
+                                <p th:text="${child.body}">
+
+                                </p>
+                                <hr>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+                <div class="am-modal-dialog">
+                    <div class="am-modal-hd">回复</div>
+                    <div class="am-modal-bd">
+                        <input type="text" class="am-modal-prompt-input" placeholder="名字">
+                        <textarea type="text" class="am-modal-prompt-input" rows="5" placeholder="一字千金"></textarea>
+                    </div>
+                    <div class="am-modal-footer">
+                        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                        <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="am-pagination blog-article-margin">
+            <li class="am-pagination-prev"><a href="#" class="">&laquo;</a></li>
+            <li class="am-pagination-next"><a href="">&raquo;</a></li>
+        </ul>
+        <hr>
+        <form id="addcomment" class="am-form am-g" action="/blog/addComment" method="post">
+            <h3 class="blog-comment">发表评论</h3>
+            <fieldset>
+                <div class="am-form-group am-u-sm-4 blog-clear-left">
+                    <input type="text" name="name" class="" placeholder="名字">
+                </div>
+                <div class="am-form-group">
+                    <textarea class="" rows="5" name="body" placeholder="一字千金"></textarea>
+                </div>
+                <input hidden="hidden" name="articleId" th:value="${article.articleId}">
+                <input hidden="hidden" name="hasParent" value="0">
+                <input hidden="hidden" name="parentId" value="-1">
+                <div class="am-form-group am-u-sm-4 blog-clear-left">
+                    <input type="text" name="verify" class="" placeholder="请输入验证码">
+                </div>
+                <div class="am-form-group am-u-sm-4 blog-clear-right">
+                    <img id="verify" name="verify" src="" onclick="getVerify(this)">
+                </div>
+                <p>
+                    <button type="button" onclick="addComment()" class="am-btn am-btn-default">发表评论</button>
+                </p>
+                <input th:hidden="${success}" th:value="${errorMsg}">
+            </fieldset>
+        </form>
+        <hr>
+    </div>
+</div>
+<!-- content end -->
+
+<footer class="blog-footer">
+    <div class="blog-text-center">Allen's Personal Blog</div>
+</footer>
+<div hidden="hidden">
+    <button id="alert"
+            hidden="hidden"
+            type="button"
+            class="am-btn am-btn-primary"
+            data-am-modal="{target: '#my-alert'}">
+    </button>
+</div>
+
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">消息</div>
+        <div id="alertText" class="am-modal-bd">
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script th:src="@{/static/blog/assets/js/jquery.min.js}" src="../../static/blog/assets/js/jquery.min.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script th:src="@{/static/blog/assets/js/amazeui.ie8polyfill.min.js}"
+        src="../../static/blog/assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script th:src="@{/static/blog/assets/js/amazeui.min.js}" src="../../static/blog/assets/js/amazeui.min.js"></script>
+<!-- <script src="assets/js/app.js"></script> -->
+</body>
+
+<script type="text/javascript">
+    addComment = function () {
+        var name = $("input[name=name]").val();
+        var body = $("textarea[name=body]").val();
+        var articleId = $("input[name=articleId]").val();
+        var hasParent = 0;
+        var parentId = -1;
+        var verify = $("input[name=verify]").val().trim();
+        $.getJSON("/blog/checkVerify?verify="+verify,function (data) {
+            if (data.success){
+                $("#comment").load("/blog/addComment", {
+                    name: name,
+                    body: body,
+                    hasParent: hasParent,
+                    parentId: parentId,
+                    articleId: articleId,
+                    verify:verify
+                }, function (xhr) {
+                    $(document).ready(function () {
+                        $("#addcomment")[0].reset();
+                    });
+                    getVerify(document.getElementById("verify"));
+                    $("#alertText").html("评论成功");
+                    document.getElementById("alert").click();
+                });
+            }else {
+                $("#alertText").html(data.errorMsg);
+                document.getElementById("alert").click();
+                getVerify(document.getElementById("verify"));
+            }
+        });
+    };
+    addResponse = function (e, id) {
+        var data = new String(e).split(",");
+        var name = data[0];
+        var body = '';
+        for (i = 1; i < data.length; i++) {
+            if (i == data.length - 1) {
+                body = body + data[i];
+            } else {
+                body = body + data[i] + ",";
+            }
+        }
+        var articleId = $("input[name=articleId]").val();
+        var hasParent = 1;
+        var parentId = id;
+        $("#comment").load("/blog/addComment", {
+            name: name,
+            body: body,
+            hasParent: hasParent,
+            parentId: parentId,
+            articleId: articleId
+        })
+    };
+
+    res = function (s) {
+        var id = s.getAttribute("data");
+        $('#my-prompt').modal({
+            relatedTarget: this,
+            onConfirm: function (e) {
+                addResponse(e.data, id);
+                $(".am-dimmer").trigger("click");
+            },
+            onCancel: function (e) {
+
+            }
+        });
+    };
+    getVerify = function (img) {
+       img.src="/blog/getVerify?"+Math.random();
+    };
+    $(window).load(function () {
+        getVerify(document.getElementById("verify"))
+    })
+
+
+</script>
+</html>

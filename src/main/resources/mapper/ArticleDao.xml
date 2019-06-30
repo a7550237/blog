@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glj.blog.dao.ArticleDao">
+
+    <resultMap id="article" type="com.glj.blog.pojo.Article">
+        <id column="article_id" property="articleId"></id>
+        <result property="title" column="title"></result>
+        <result property="author" column="author"></result>
+        <result property="keyWord" column="key_word"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="htmlBody" column="html_body"></result>
+        <result property="markDownBody" column="mark_down_body"></result>
+        <result property="coverPhotoPath" column="cover_photo_path"></result>
+        <association property="tag" column="tag_id" javaType="com.glj.blog.pojo.Tag" >
+            <id column="tag_id" property="tagId"></id>
+            <result property="tag" column="tag"></result>
+        </association>
+
+    </resultMap>
+
+    <insert id="saveArticle" parameterType="com.glj.blog.pojo.Article" >
+
+        insert into tb_article
+        (
+            title,
+            author,
+            key_word,
+            create_time,
+            html_body,
+            mark_down_body,
+            tag_id,
+            cover_photo_path
+        )values
+        (
+            #{title},
+            #{author},
+            #{keyWord},
+            #{createTime},
+            #{htmlBody},
+            #{markDownBody},
+            #{tag.tagId},
+            #{coverPhotoPath}
+        )
+
+    </insert>
+
+    <select id="getArticles" resultMap="article">
+        select * from tb_article
+         <where>
+             <if test="id != -1">
+                 tag_id = #{id}
+             </if>
+         </where>
+         order by create_time DESC
+    </select>
+
+    <select id="getArticleById" parameterType="int" resultMap="article">
+        select * from tb_article where article_id = #{id}
+    </select>
+
+    <select id="getTags" resultType="com.glj.blog.pojo.Tag">
+        select * from tb_tag
+    </select>
+
+
+    <update id="updateArticle" parameterType="com.glj.blog.pojo.Article">
+        update tb_article
+        set title=#{title},
+        author=#{author},
+        key_word=#{keyWord},
+        create_time=#{createTime},
+        html_body=#{htmlBody},
+        mark_down_body=#{markDownBody},
+        tag_id=#{tag.tagId},
+        cover_photo_path=#{coverPhotoPath}
+        where
+        article_id=#{articleId}
+    </update>
+
+    <delete id="deleteArticleById" parameterType="int">
+        delete from tb_article where article_id=#{articleId}
+    </delete>
+
+    <select id="getHotTags" parameterType="int" resultType="com.glj.blog.pojo.Tag">
+        SELECT * from tb_tag where tag_id in (
+            SELECT x.tag_id FROM (
+                SELECT DISTINCT(tag_id) from tb_article GROUP BY tag_id ORDER BY COUNT(tag_id) DESC LIMIT 0,#{size}
+                ) as x
+            )
+    </select>
+
+
+</mapper>

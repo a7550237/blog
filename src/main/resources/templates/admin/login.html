@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博客后台登录页面</title>
+    <meta name="description" content="这是一个 index 页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" th:href="@{/static/admin/assets/i/favicon.png}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/static/admin/assets/i/app-icon72x722x.png}">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/amazeui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/amazeui.datatables.min.css}" />
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/app.css}">
+    <script type="text/javascript" th:src="@{/static/admin/assets/js/jquery.min.js}" charset="utf-8"></script>
+
+</head>
+
+<body data-type="login">
+    <script th:src="@{/static/admin/assets/js/theme.js}"></script>
+    <div class="am-g tpl-g">
+        <!-- 风格切换 -->
+        <div class="tpl-skiner">
+            <div class="tpl-skiner-toggle am-icon-cog">
+            </div>
+            <div class="tpl-skiner-content">
+                <div class="tpl-skiner-content-title">
+                    选择主题
+                </div>
+                <div class="tpl-skiner-content-bar">
+                    <span class="skiner-color skiner-white" data-color="theme-white"></span>
+                    <span class="skiner-color skiner-black" data-color="theme-black"></span>
+                </div>
+            </div>
+        </div>
+        <div class="tpl-login">
+            <div class="tpl-login-content">
+                <div class="tpl-login-logo">
+
+                </div>
+                <p th:text="${#request.getAttribute('errorMessage')}" style="color:red"></p>
+                <form class="am-form tpl-form-line-form" th:action="@{/admin/login}" id="login" method="post">
+                    <div class="am-form-group">
+                        <input th:value="${#request.getAttribute('userName')}" type="text" class="tpl-form-input" name="userName" placeholder="请输入账号">
+
+                    </div>
+
+                    <div class="am-form-group">
+                        <input th:value="${#request.getAttribute('password')}" type="password" class="tpl-form-input" name="password" placeholder="请输入密码">
+
+                    </div>
+                    <div class="am-form-group tpl-login-remember-me">
+
+                        <input th:checked="${#request.getAttribute('isChecked')}"  id="remember-me" name="isRemember" type="checkbox">
+                        <label for="remember-me">
+       
+                        记住密码
+                         </label>
+
+                    </div>
+                    <div class="am-form-group">
+
+                        <button type="submit" id="submit" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn">提交</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:src="@{/static/admin/assets/js/amazeui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/admin/assets/js/app.js}"></script>
+
+</body>
+
+</html>

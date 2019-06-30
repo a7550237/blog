@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glj.blog.dao.CommentDao">
+    <resultMap id="comments" type="com.glj.blog.pojo.Comment">
+        <id property="commentId" column="comment_id"></id>
+        <result property="name" column="name"  ></result>
+        <result property="body" column="body"  ></result>
+        <result property="hasParent" column="has_parent"  ></result>
+        <result property="parentId" column="parent_id"  ></result>
+        <result property="createTime" column="create_time"  ></result>
+        <result property="articleId" column="article_id"  ></result>
+        <collection property="commentChildren" column="commentId" ofType="com.glj.blog.pojo.Comment">
+            <result property="name" column="res_name"  ></result>
+            <result property="body" column="res_body"  ></result>
+            <result property="createTime" column="res_create_time"  ></result>
+        </collection>
+
+    </resultMap>
+
+    <insert id="addComment"   parameterType="com.glj.blog.pojo.Comment">
+        insert into tb_comment(name,body,has_parent,parent_id,create_time,article_id)
+        values (#{name},#{body},#{hasParent},#{parentId},#{createTime},#{articleId});
+    </insert>
+
+    <select id="getComments" parameterType="int" resultMap="comments">
+        select
+        com.comment_id,com.name,com.body ,com.has_parent,com.parent_id,
+        com.create_time,com.article_id,
+        res.name as res_name,res.body as res_body,res.create_time as res_create_time
+        from tb_comment as com left join tb_comment as res
+        on com.article_id = #{id} and com.comment_id = res.parent_id and com.has_parent = 0
+
+    </select>
+</mapper>

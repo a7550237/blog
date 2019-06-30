@@ -1,0 +1,121 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>图片库</title>
+  <meta name="referrer" content="no-referrer"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link th:href="@{/static/blog/assets/css/amazeui.min.css}" rel="stylesheet" href="../../static/blog/assets/css/amazeui.min.css">
+    <link th:href="@{/static/blog/assets/css/app.css}" rel="stylesheet" href="../../static/blog/assets/css/app.css">
+
+</head>
+
+<body id="blog-article-sidebar">
+<!-- header start -->
+<header class="am-g am-g-fixed blog-fixed blog-text-center blog-header">
+    <div class="am-u-sm-8 am-u-sm-centered">
+        <img width="100"  th:src="@{/static/blog/assets/i/302_1584.jpg}" alt="Amaze UI Logo"/>
+        <h2 class="am-hide-sm-only am-monospace">Live and learn</h2>
+    </div>
+</header>
+<!-- header end -->
+<hr>
+
+<!-- nav start -->
+<nav class="am-g am-g-fixed blog-fixed blog-nav">
+<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only blog-button" data-am-collapse="{target: '#blog-collapse'}" ><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+  <div class="am-collapse am-topbar-collapse" id="blog-collapse">
+    <ul class="am-nav am-nav-pills am-topbar-nav">
+      <li ><a href="/blog/index">首页</a></li>
+
+      <li class="am-active"><a href="/blog/img">图片库</a></li>
+
+    </ul>
+    <form class="am-topbar-form am-topbar-right am-form-inline" role="search">
+      <div class="am-form-group">
+        <input type="text" class="am-form-field am-input-sm" placeholder="搜索">
+      </div>
+    </form>
+  </div>
+</nav>
+<!-- nav end -->
+<hr>
+<!-- content srart -->
+<div id="imgContent" class="am-g am-g-fixed blog-fixed blog-content">
+        <figure data-am-widget="figure" class="am am-figure am-figure-default "   data-am-figure="{pureview: true }">
+            <div id="container" >
+                <div th:each="item:${items}" >
+                <img th:src="${item.src}" th:data-ref="${item.src}">
+                <h3 th:text="${item.title}"></h3>
+                </div>
+            </div>
+        </figure>
+</div>
+<!-- content end -->
+ <footer class="blog-footer">
+    <div class="blog-text-center">Allen's Personal Blog</div>
+ </footer>
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script th:src="@{/static/blog/assets/js/jquery.min.js}" src="../../static/blog/assets/js/jquery.min.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script th:src="@{/static/blog/assets/js/amazeui.ie8polyfill.min.js}" src="../../static/blog/assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script th:src="@{/static/blog/assets/js/amazeui.min.js}" src="../../static/blog/assets/js/amazeui.min.js"></script>
+<script th:src="@{/static/blog/assets/js/pinto.min.js}" src="../../static/blog/assets/js/pinto.min.js"></script>
+<script th:src="@{/static/blog/assets/js/img.js}" src="../../static/blog/assets/js/img.js"></script>
+
+</body>
+<script type="text/javascript" >
+    /*layui.use(['flow'],function () {
+       var flow = layui.flow;
+       flow.load({
+           elem:'#container',
+           isLazyimg:true,
+           done:function (page,next) {
+               $.getJSON("/blog/getMoreImg?pageNumber="+page,function (data) {
+                   var lis = [];
+                   data.imgs.map(function (item,index) {
+                       lis.push("<div><img lay-src="+item.src+" data-ref="+item.src+" ><h3>"+item.title+"</h3></div>");
+                   });
+                   next(lis.join(''),page<100);
+               });
+           }
+       })
+
+
+    });*/
+
+
+    /*var pageNumber = 0;
+
+    $(window).scroll(function () {
+        var documentHeight = [0];
+        if($(document).scrollTop() + $(window).height() > $(document).height()-1){
+            documentHeight.push($(document).height())
+            if(documentHeight[documentHeight.length-1]>documentHeight[documentHeight.length-2]){
+                documentHeight[documentHeight.length-2] = documentHeight[documentHeight.length-2] + documentHeight[documentHeight.length-1];
+                $.getJSON("/blog/getMoreImg?pageNumber="+pageNumber++,function (data) {
+                    data.imgs.map(function (item,index) {
+                        $("#container").append("<div><img src="+item.src+" data-ref="+item.src+" ><h3>"+item.title+"</h3></div>")
+                    });
+                });
+
+            }
+        }
+
+
+    });*/
+
+</script>
+</html>
